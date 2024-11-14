@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KznTestProject</string>
+    <string name="sport_default">Sport</string>
+    <string name="timestamp_default">HH:MM:SS</string>
+    <string name="competitor_one_default">Competitor 1</string>
+    <string name="competitor_two_default">Competitor 2</string>
 </resources>

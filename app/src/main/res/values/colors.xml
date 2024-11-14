@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="kzn_yellow">#ffab30</color>
+    <color name="kzn_gray">#343434</color>
+    <color name="kzn_red">#e7410f</color>
+    <color name="kzn_black">#000000</color>
+    <color name="kzn_blue">#0094ff</color>
+    <color name="kzn_white">#ffffff</color>
 </resources>
