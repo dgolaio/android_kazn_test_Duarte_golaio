@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -12,12 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,10 +35,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kzntestproject.R
+import com.example.kzntestproject.SportsDisplayViewModel
 
 @Composable
-fun SportItem(modifier: Modifier = Modifier) {
+fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDisplayViewModel,id:String) {
      var expanded by remember { mutableStateOf(false) }
+     val myList = listOf("Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan")
+     val sportsEvents by sportsDisplayViewModel.sportEvents.collectAsState()
 
      val icons = if(expanded)
           Icons.Filled.KeyboardArrowUp
@@ -56,7 +62,7 @@ fun SportItem(modifier: Modifier = Modifier) {
                     contentDescription = "SportImage"
                )
 
-               Text(text = stringResource(id = R.string.sport_default), modifier = Modifier
+               Text(text = id, modifier = Modifier
                     .fillMaxWidth(0.6f)
                     .align(Alignment.CenterVertically),
                     textAlign = TextAlign.Start, fontWeight = FontWeight.Bold)
@@ -74,9 +80,13 @@ fun SportItem(modifier: Modifier = Modifier) {
                     )
           }
      }
-     if(expanded) {
-          ExpandedSportItem(modifier = modifier)
+     Column {
+          if(expanded) {
+               ExpandedSportItem(eventsList = myList)
+          }
      }
+
 
      Spacer(modifier = Modifier.height(20.dp))
 }
+

@@ -1,8 +1,22 @@
 package com.example.kzntestproject.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.rounded.Star
@@ -19,27 +33,18 @@ import androidx.compose.ui.unit.dp
 import com.example.kzntestproject.R
 
 @Composable
-fun ExpandedSportItem(modifier: Modifier) {
-
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = stringResource(id = R.string.timestamp_default), 
-            color = colorResource(id = R.color.kzn_white),
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.border(2.dp, color = colorResource(id = R.color.kzn_blue)).padding(3.dp))
-        
-        Icon(imageVector = Icons.Sharp.Star, contentDescription = "favourite Match", tint = colorResource(
-            id = R.color.kzn_white), modifier = Modifier.align(Alignment.CenterHorizontally))
-
-        Text(text = stringResource(id = R.string.competitor_one_default),
-            color = colorResource(id = R.color.kzn_white))
-
-        Text(text = "vs",
-            color = colorResource(id = R.color.kzn_red),
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-
-        Text(text = stringResource(id = R.string.competitor_two_default),
-            color = colorResource(id = R.color.kzn_white))
+fun ExpandedSportItem(modifier: Modifier=Modifier,eventsList: List<String>) {
+    val lazyGridState = rememberLazyStaggeredGridState()
+    LazyVerticalStaggeredGrid(
+        state = lazyGridState,
+        columns = StaggeredGridCells.Fixed(3),
+        modifier = Modifier.heightIn(max = 400.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        items(eventsList.size) { item ->
+            EventItemComposable()
+        }
     }
+
 
 }
