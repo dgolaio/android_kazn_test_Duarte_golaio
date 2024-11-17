@@ -7,8 +7,8 @@ This project is a sports event tracker that allows users to view upcoming sports
 - Display a list of sports events
 - Expand and collapse event categories
 - View detailed information about each event
-- Manage favorites (not yet implemented)
-- Countdown timer for each event (not yet implemented)
+
+
 
 ## Todo
 
@@ -16,6 +16,9 @@ This project is a sports event tracker that allows users to view upcoming sports
   - **Favorites**: Save user favorite sports events for easy access.
   - **Expanded Items**: Save which categories are expanded for a more personalized experience.
   - **All Events**: Store all sports events locally for offline access.
+  -  Manage favorites (not yet implemented)
+  - Countdown timer for each event (not yet implemented)
+  - Unit Tests
   
 - Create a **Coroutine** to update the countdown timer for each event in real-time, displaying the remaining time in `HH:MM:SS` format.
 
