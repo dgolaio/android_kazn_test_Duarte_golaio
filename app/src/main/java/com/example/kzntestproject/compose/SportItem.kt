@@ -41,7 +41,7 @@ import com.example.kzntestproject.domain.model.EventDetail
 import com.example.kzntestproject.domain.model.SportEvent
 
 @Composable
-fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDisplayViewModel,id:String, sportEvents: List<SportEvent>, ) {
+fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDisplayViewModel,id:String, sportEvents: List<EventDetail>, ) {
      var expanded by remember { mutableStateOf(false) }
      val sportsEvents by sportsDisplayViewModel.sportEvents.collectAsState()
 
@@ -99,7 +99,6 @@ fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDispl
                ExpandedSportItem(eventsDetail = sportEvents)
           }
      }
-
 
      Spacer(modifier = Modifier.height(20.dp))
 }

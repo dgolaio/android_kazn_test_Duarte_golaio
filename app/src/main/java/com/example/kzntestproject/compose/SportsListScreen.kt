@@ -18,20 +18,19 @@ fun SportsListScreen(modifier: Modifier = Modifier, viewModel: SportsDisplayView
     val sportsEvents by viewModel.sportEvents.collectAsState()
 
     when(sportsEvents) {
-        is ApiResponse.EventList -> {
-            val events = (sportsEvents as ApiResponse.EventList).e
-        LazyColumn {
-            items(events.size) { event ->
-                SportItem(
-                    sportEvents = events.get(event).events,
-                    id = events.get(event).sportCode ?:"0",
-                    sportsDisplayViewModel = viewModel,
-                    modifier = Modifier.background(colorResource(id = R.color.kzn_white),
-                ))
+        is ApiResponse.EventList -> {}
+
+        is ApiResponse.MultipleEventLists -> {
+            val events = (sportsEvents as ApiResponse.MultipleEventLists).groupedEvents
+            LazyColumn {
+                items(events.size) { event ->
+                    SportItem(
+                        sportEvents = events.get(event).events!!,
+                        id = events.get(event).key ?:"0",
+                        sportsDisplayViewModel = viewModel,
+                        modifier = Modifier.background(colorResource(id = R.color.kzn_white),
+                        ))
+                }
             }
         }
-    }
-
-        is ApiResponse.SportCategory -> {}
-    }
-}
+    } }

@@ -16,7 +16,7 @@ class SportsDisplayViewModel @Inject constructor(
     private val getSportEventsUseCase: GetSportEventsUseCase
 ) : ViewModel() {
 
-    private val _sportsEvents = MutableStateFlow<ApiResponse>(ApiResponse.EventList(emptyList(), ""))
+    private val _sportsEvents = MutableStateFlow<ApiResponse>(ApiResponse.EventList("",emptyList()))
     val sportEvents: StateFlow<ApiResponse> = _sportsEvents
 
     init {
