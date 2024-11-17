@@ -36,12 +36,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kzntestproject.R
 import com.example.kzntestproject.SportsDisplayViewModel
+import com.example.kzntestproject.data.api.ApiResponse
+import com.example.kzntestproject.domain.model.EventDetail
+import com.example.kzntestproject.domain.model.SportEvent
 
 @Composable
-fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDisplayViewModel,id:String) {
+fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDisplayViewModel,id:String, sportEvents: List<SportEvent>, ) {
      var expanded by remember { mutableStateOf(false) }
-     val myList = listOf("Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan")
      val sportsEvents by sportsDisplayViewModel.sportEvents.collectAsState()
+
+     val iconResource = when (id) {
+          "FOOT" -> R.drawable.soccer
+          "BASK" -> R.drawable.basketball
+          "TENN" -> R.drawable.badmintonball
+          "TABL" -> R.drawable.ic_launcher_foreground
+          "VOLL" -> R.drawable.volleyball
+          "ESPS" -> R.drawable.esports
+          "BCHV" -> R.drawable.ic_launcher_foreground
+          "BADM" -> R.drawable.badmintonball
+          else -> R.drawable.ic_launcher_foreground
+     }
 
      val icons = if(expanded)
           Icons.Filled.KeyboardArrowUp
@@ -58,7 +72,7 @@ fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDispl
                          .fillMaxWidth(0.2f)
                          .aspectRatio(5 / 3f)
                          .clipToBounds(),
-                    painter = painterResource(id = R.drawable.badmintonball),
+                    painter = painterResource(id = iconResource),
                     contentDescription = "SportImage"
                )
 
@@ -82,7 +96,7 @@ fun SportItem(modifier: Modifier = Modifier, sportsDisplayViewModel: SportsDispl
      }
      Column {
           if(expanded) {
-               ExpandedSportItem(eventsList = myList)
+               ExpandedSportItem(eventsDetail = sportEvents)
           }
      }
 

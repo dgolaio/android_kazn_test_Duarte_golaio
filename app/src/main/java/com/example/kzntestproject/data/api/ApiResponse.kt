@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 
 sealed class ApiResponse {
     data class EventList(val e: List<SportCategory>,val id: String): ApiResponse()
-    data class SportCategory(val sportCode: String, val sportName:String,val events: List<SportEvent>)
+    data class SportCategory(val sportCode: String, val sportName:String,val events: List<SportEvent>): ApiResponse()
 }

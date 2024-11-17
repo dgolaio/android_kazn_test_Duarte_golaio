@@ -31,18 +31,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.kzntestproject.R
+import com.example.kzntestproject.data.api.ApiResponse
+import com.example.kzntestproject.domain.model.SportEvent
 
 @Composable
-fun ExpandedSportItem(modifier: Modifier=Modifier,eventsList: List<String>) {
+fun ExpandedSportItem(modifier: Modifier=Modifier, eventsDetail:List<SportEvent>) {
     val lazyGridState = rememberLazyStaggeredGridState()
+
     LazyVerticalStaggeredGrid(
         state = lazyGridState,
         columns = StaggeredGridCells.Fixed(3),
         modifier = Modifier.heightIn(max = 400.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        items(eventsList.size) { item ->
-            EventItemComposable()
+        items(eventsDetail.size) { item ->
+            EventItemComposable(eventsDetail.get(item).eventDetails!!)
         }
     }
 

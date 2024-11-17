@@ -17,11 +17,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kzntestproject.R
+import com.example.kzntestproject.SportsDisplayViewModel
+import com.example.kzntestproject.data.api.ApiResponse
+import com.example.kzntestproject.domain.model.EventDetail
+import com.example.kzntestproject.domain.model.SportEvent
 
 @Composable
-fun EventItemComposable(modifier: Modifier = Modifier) {
+fun EventItemComposable(eventDetail: List<EventDetail>) {
+
+
     Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = stringResource(id = R.string.timestamp_default),
+        Text(text = eventDetail.get(0).timestamp.toString(),
             color = colorResource(id = R.color.kzn_white),
             fontWeight = FontWeight.Bold,
             modifier = Modifier.border(2.dp, color = colorResource(id = R.color.kzn_blue)).padding(3.dp),

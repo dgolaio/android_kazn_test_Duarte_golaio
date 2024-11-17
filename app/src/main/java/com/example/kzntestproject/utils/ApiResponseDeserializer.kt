@@ -18,11 +18,30 @@ class ApiResponseDeserializer : JsonDeserializer<ApiResponse>{
             parseEventList(jsonElement)
         }
 
-        return ApiResponse.EventList(e = eventList,"i")
+        val groupedBySportType: MutableMap<String, List<SportEvent>> = mutableMapOf()
+        groupedBySportType.putAll ( eventList
+            .flatMap { sportEvent ->
+
+                sportEvent.eventDetails?.map { eventDetail ->
+                    sportEvent to eventDetail.sportType
+                } ?: emptyList()
+            }
+            .groupBy(
+                keySelector = { it.first.id ?: "Unknown" },
+                valueTransform = { it.first }
+            ))
+
+        val evntlst: ArrayList<ApiResponse.SportCategory> = ArrayList()
+        for (key in groupedBySportType){
+            evntlst.add(ApiResponse.SportCategory(key.key, "", key.value))
+        }
+
+        return ApiResponse.EventList(e = evntlst,"i")
     }
 
-    private fun parseEventList(jsonElement: JsonElement): ApiResponse.SportCategory {
+    private fun parseEventList(jsonElement: JsonElement): SportEvent {
         val jsonObject = jsonElement.asJsonObject
+        val gatherSportEvents: ArrayList<SportEvent> = arrayListOf()
 
         val id = jsonObject.has("id")
 
@@ -30,7 +49,7 @@ class ApiResponseDeserializer : JsonDeserializer<ApiResponse>{
         if (id) {
             val withIdEvents = jsonObject.get("d").asJsonArray
 
-            val gatherSportEvents: ArrayList<SportEvent> = arrayListOf()
+            //val gatherSportEvents: ArrayList<SportEvent> = arrayListOf()
 
             withIdEvents.map { ev ->
                 val eachEvent = ev.asJsonObject
@@ -43,37 +62,43 @@ class ApiResponseDeserializer : JsonDeserializer<ApiResponse>{
                    eventDetails.add(parseEventDetail(evntDetail.asJsonObject))
                 }
 
-                gatherSportEvents.add(
-                    SportEvent(
-                        eachEvent.get("i").asString,
-                        eachEvent.get("d").asString,
-                        eventDetails
-                    )
+                return SportEvent(
+                    eachEvent.get("i").asString,
+                    eachEvent.get("d").asString,
+                    eventDetails
                 )
             }
-            return ApiResponse.SportCategory("", "", gatherSportEvents)
+            //return ApiResponse.SportCategory("", "", gatherSportEvents)
         } else { // does not have an id
 
             val eventsArrayJson = jsonObject.get("e").asJsonArray
 
-            val gatherSportEvents: ArrayList<SportEvent> = arrayListOf()
 
             val eventDetails: ArrayList<EventDetail> = arrayListOf()
 
-            eventsArrayJson.map {
-                event ->
+            eventsArrayJson.map { event ->
                 eventDetails.add(parseEventDetail(event.asJsonObject))
             }
 
-            gatherSportEvents.add(
+            /* gatherSportEvents.add(
                 SportEvent(
                     jsonObject.get("i").asString,
                     jsonObject.get("d").asString,
                     eventDetails
                 )
+            )*/
+
+            return SportEvent(
+                jsonObject.get("i").asString,
+                jsonObject.get("d").asString,
+                eventDetails
             )
-            return ApiResponse.SportCategory(jsonObject.get("i").asString, jsonObject.get("d").asString, gatherSportEvents)
         }
+        return SportEvent(
+            "",
+            "",
+            null
+        )
     }
 
     private fun parseEventDetail(jsonElement: JsonElement): EventDetail {
@@ -88,5 +113,5 @@ class ApiResponseDeserializer : JsonDeserializer<ApiResponse>{
         return EventDetail(eventId, eventName, sportCode,timestamp,shortName)
     }
 
-    
+
 }

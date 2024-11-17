@@ -15,7 +15,6 @@ import com.example.kzntestproject.data.api.ApiResponse
 
 @Composable
 fun SportsListScreen(modifier: Modifier = Modifier, viewModel: SportsDisplayViewModel){
-    val myList = listOf("Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan","Canada", "China", "USA", "Pakistan")
     val sportsEvents by viewModel.sportEvents.collectAsState()
 
     when(sportsEvents) {
@@ -24,12 +23,15 @@ fun SportsListScreen(modifier: Modifier = Modifier, viewModel: SportsDisplayView
         LazyColumn {
             items(events.size) { event ->
                 SportItem(
-                    id = events.get(event).sportName ?:"0",
+                    sportEvents = events.get(event).events,
+                    id = events.get(event).sportCode ?:"0",
                     sportsDisplayViewModel = viewModel,
-                    modifier = Modifier.background(colorResource(id = R.color.kzn_white)
+                    modifier = Modifier.background(colorResource(id = R.color.kzn_white),
                 ))
             }
         }
     }
+
+        is ApiResponse.SportCategory -> {}
     }
 }
